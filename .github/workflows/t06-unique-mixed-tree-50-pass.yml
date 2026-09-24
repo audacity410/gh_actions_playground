@@ -1,0 +1,224 @@
+name: t06-unique-mixed-tree-50-pass
+# Nested tree counts toward the limit: rw-nest-01..09 (9) + rw-uniq-01..41 (41) = 50.
+# EXPECT: success. (Nest chain jobs always execute; uniq leaves skip unless execute=true.)
+on:
+  workflow_dispatch:
+    inputs:
+      execute:
+        description: "Actually run leaf jobs (costs minutes). Limit validation happens either way."
+        type: boolean
+        default: false
+permissions:
+  contents: read
+
+jobs:
+  nest-chain:
+    uses: ./.github/workflows/rw-nest-01.yml
+    with:
+      trail: MIXED
+    secrets: inherit
+
+  u01:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u02:
+    uses: ./.github/workflows/rw-uniq-02.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u03:
+    uses: ./.github/workflows/rw-uniq-03.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u04:
+    uses: ./.github/workflows/rw-uniq-04.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u05:
+    uses: ./.github/workflows/rw-uniq-05.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u06:
+    uses: ./.github/workflows/rw-uniq-06.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u07:
+    uses: ./.github/workflows/rw-uniq-07.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u08:
+    uses: ./.github/workflows/rw-uniq-08.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u09:
+    uses: ./.github/workflows/rw-uniq-09.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u10:
+    uses: ./.github/workflows/rw-uniq-10.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u11:
+    uses: ./.github/workflows/rw-uniq-11.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u12:
+    uses: ./.github/workflows/rw-uniq-12.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u13:
+    uses: ./.github/workflows/rw-uniq-13.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u14:
+    uses: ./.github/workflows/rw-uniq-14.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u15:
+    uses: ./.github/workflows/rw-uniq-15.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u16:
+    uses: ./.github/workflows/rw-uniq-16.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u17:
+    uses: ./.github/workflows/rw-uniq-17.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u18:
+    uses: ./.github/workflows/rw-uniq-18.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u19:
+    uses: ./.github/workflows/rw-uniq-19.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u20:
+    uses: ./.github/workflows/rw-uniq-20.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u21:
+    uses: ./.github/workflows/rw-uniq-21.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u22:
+    uses: ./.github/workflows/rw-uniq-22.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u23:
+    uses: ./.github/workflows/rw-uniq-23.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u24:
+    uses: ./.github/workflows/rw-uniq-24.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u25:
+    uses: ./.github/workflows/rw-uniq-25.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u26:
+    uses: ./.github/workflows/rw-uniq-26.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u27:
+    uses: ./.github/workflows/rw-uniq-27.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u28:
+    uses: ./.github/workflows/rw-uniq-28.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u29:
+    uses: ./.github/workflows/rw-uniq-29.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u30:
+    uses: ./.github/workflows/rw-uniq-30.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u31:
+    uses: ./.github/workflows/rw-uniq-31.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u32:
+    uses: ./.github/workflows/rw-uniq-32.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u33:
+    uses: ./.github/workflows/rw-uniq-33.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u34:
+    uses: ./.github/workflows/rw-uniq-34.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u35:
+    uses: ./.github/workflows/rw-uniq-35.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u36:
+    uses: ./.github/workflows/rw-uniq-36.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u37:
+    uses: ./.github/workflows/rw-uniq-37.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u38:
+    uses: ./.github/workflows/rw-uniq-38.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u39:
+    uses: ./.github/workflows/rw-uniq-39.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u40:
+    uses: ./.github/workflows/rw-uniq-40.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  u41:
+    uses: ./.github/workflows/rw-uniq-41.yml
+    with:
+      execute: ${{ inputs.execute }}

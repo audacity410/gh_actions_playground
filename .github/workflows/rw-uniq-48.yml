@@ -1,0 +1,16 @@
+name: rw-uniq-48
+# Leaf reusable workflow #48 for the 50-unique-reference tests.
+# The job is skipped unless execute=true, so the limit can be tested for free.
+on:
+  workflow_call:
+    inputs:
+      execute:
+        type: boolean
+        default: false
+
+jobs:
+  leaf:
+    if: ${{ inputs.execute }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "rw-uniq-48 executed"

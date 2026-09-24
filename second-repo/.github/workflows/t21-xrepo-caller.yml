@@ -1,0 +1,10 @@
+name: t21-xrepo-caller
+# Put this file in a SECOND repo in the same org. Replace YOUR_ORG/YOUR_LIMITS_REPO.
+# In the limits repo: Settings > Actions > General > Access > allow repos in the org.
+on: workflow_dispatch
+permissions:
+  contents: read
+
+jobs:
+  call:
+    uses: YOUR_ORG/YOUR_LIMITS_REPO/.github/workflows/rw-xrepo-local-action.yml@main

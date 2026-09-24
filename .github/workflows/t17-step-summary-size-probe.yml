@@ -1,0 +1,16 @@
+name: t17-step-summary-size-probe
+# $GITHUB_STEP_SUMMARY is documented at 1 MiB per step. EXPECT: 'over' step's summary
+# is rejected with an annotation. Matters if you port ADO test/scan report tabs to summaries.
+on: workflow_dispatch
+permissions:
+  contents: read
+
+jobs:
+  summary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: under (~900 KiB)
+        run: python3 -c 'print("x" * 900 * 1024)' >> "$GITHUB_STEP_SUMMARY"
+      - name: over (~1.1 MiB)
+        continue-on-error: true
+        run: python3 -c 'print("y" * 1100 * 1024)' >> "$GITHUB_STEP_SUMMARY"

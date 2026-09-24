@@ -1,0 +1,28 @@
+name: comp-recurse
+description: Self-recursive composite used to find the exact runtime depth limit
+inputs:
+  remaining:
+    description: Levels still to descend (including this one)
+    required: true
+  level:
+    description: Current level
+    required: false
+    default: "1"
+runs:
+  using: composite
+  steps:
+    - id: calc
+      shell: bash
+      env:
+        REMAINING: ${{ inputs.remaining }}
+        LEVEL: ${{ inputs.level }}
+      run: |
+        echo "composite-recurse level=$LEVEL remaining=$REMAINING"
+        # GitHub expressions have no arithmetic, so compute in shell.
+        echo "next_remaining=$((REMAINING - 1))" >> "$GITHUB_OUTPUT"
+        echo "next_level=$((LEVEL + 1))" >> "$GITHUB_OUTPUT"
+    - if: ${{ steps.calc.outputs.next_remaining != '0' }}
+      uses: ./.github/actions/comp-recurse
+      with:
+        remaining: ${{ steps.calc.outputs.next_remaining }}
+        level: ${{ steps.calc.outputs.next_level }}

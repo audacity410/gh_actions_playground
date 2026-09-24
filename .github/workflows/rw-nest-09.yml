@@ -1,0 +1,33 @@
+name: rw-nest-09
+# Reusable workflow nesting level 9 of the chain.
+# rw-nest-00 exists only to push the chain one level past the limit (t02).
+on:
+  workflow_call:
+    inputs:
+      trail:
+        type: string
+        default: ""
+    outputs:
+      trail:
+        description: Breadcrumb proving outputs bubble up through every level
+        value: ${{ jobs.here.outputs.trail }}
+
+jobs:
+  here:
+    runs-on: ubuntu-latest
+    outputs:
+      trail: ${{ steps.t.outputs.trail }}
+    steps:
+      - id: t
+        env:
+          TRAIL_IN: ${{ inputs.trail }}
+          HAS_SECRET: ${{ secrets.GHA_LIMIT_TEST_SECRET != '' }}
+        run: |
+          echo "Reusable workflow level 9 (L09); top-level caller: ${{ github.workflow_ref }}"
+          # secrets: inherit must be re-declared at every hop to reach the deepest level.
+          if [ "$HAS_SECRET" = "true" ]; then
+            echo "OK: GHA_LIMIT_TEST_SECRET reached level 9 via secrets: inherit chain"
+          else
+            echo "::warning::GHA_LIMIT_TEST_SECRET not visible at level 9 (create the repo secret to test inheritance)"
+          fi
+          echo "trail=${TRAIL_IN}>L09" >> "$GITHUB_OUTPUT"

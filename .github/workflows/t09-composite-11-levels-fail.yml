@@ -1,0 +1,15 @@
+name: t09-composite-11-levels-fail
+# comp-00 -> comp-01 -> ... -> comp-10 (11 levels). EXPECT: step fails at runtime
+# with a composite depth error. Note: enforced by the RUNNER, not at workflow load.
+on: workflow_dispatch
+permissions:
+  contents: read
+
+jobs:
+  composite-chain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5  # pin to a full commit SHA before real use
+      - uses: ./.github/actions/comp-00
+        with:
+          trail: T09

@@ -1,0 +1,20 @@
+name: t10-composite-depth-probe
+# Finds the real composite nesting ceiling empirically: the highest depth that passes
+# is your limit. Relies on the runner resolving nested local actions lazily.
+on: workflow_dispatch
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        depth: [8, 9, 10, 11, 12]
+    name: depth-${{ matrix.depth }}
+    steps:
+      - uses: actions/checkout@v5  # pin to a full commit SHA before real use
+      - uses: ./.github/actions/comp-recurse
+        with:
+          remaining: ${{ matrix.depth }}

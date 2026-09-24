@@ -1,0 +1,35 @@
+name: t12-matrix-dynamic-probe
+# Dynamic (fromJSON) matrix, the pattern you'll use to replace ADO ${{ each }} loops.
+# size=257 EXPECT: fails at matrix expansion. size<=256 EXPECT: success.
+on:
+  workflow_dispatch:
+    inputs:
+      size:
+        description: Number of matrix entries
+        type: number
+        default: 257
+permissions:
+  contents: read
+
+jobs:
+  gen:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.g.outputs.matrix }}
+    steps:
+      - id: g
+        env:
+          SIZE: ${{ inputs.size }}
+        run: |
+          m=$(python3 -c "import json,os; print(json.dumps({'i': list(range(int(os.environ['SIZE'])))}))")
+          echo "matrix=$m" >> "$GITHUB_OUTPUT"
+
+  fan:
+    needs: gen
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 50
+      matrix: ${{ fromJSON(needs.gen.outputs.matrix) }}
+    steps:
+      - run: echo "entry ${{ matrix.i }}"

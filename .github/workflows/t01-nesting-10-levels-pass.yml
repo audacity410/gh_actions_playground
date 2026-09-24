@@ -1,0 +1,28 @@
+name: t01-nesting-10-levels-pass
+# Caller + 9 reusable levels = 10 levels total (documented max). EXPECT: success.
+# Also verifies: outputs bubble up 9 levels, workflow-level env does not propagate,
+# secrets: inherit reaches the bottom (create repo secret GHA_LIMIT_TEST_SECRET).
+on: workflow_dispatch
+permissions:
+  contents: read
+env:
+  CALLER_ENV: set-in-caller
+
+jobs:
+  chain:
+    uses: ./.github/workflows/rw-nest-01.yml
+    with:
+      trail: T01
+    secrets: inherit
+
+  verify:
+    needs: chain
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          TRAIL: ${{ needs.chain.outputs.trail }}
+          EXPECTED: "T01>L01>L02>L03>L04>L05>L06>L07>L08>L09"
+        run: |
+          echo "Got:      $TRAIL"
+          echo "Expected: $EXPECTED"
+          [ "$TRAIL" = "$EXPECTED" ] || { echo "::error::Output did not survive the chain"; exit 1; }

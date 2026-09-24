@@ -1,0 +1,27 @@
+name: comp-04
+description: Composite action nesting level 4
+inputs:
+  trail:
+    description: Breadcrumb
+    required: false
+    default: ""
+outputs:
+  trail:
+    description: Breadcrumb after this level
+    value: ${{ steps.next.outputs.trail }}
+runs:
+  using: composite
+  steps:
+    - id: here
+      shell: bash
+      env:
+        TRAIL_IN: ${{ inputs.trail }}
+      run: |
+        echo "Composite level 4"
+        echo "trail=${TRAIL_IN}>C04" >> "$GITHUB_OUTPUT"
+    - id: next
+      # Local path is resolved against $GITHUB_WORKSPACE (the checked-out repo),
+      # NOT relative to this action's directory.
+      uses: ./.github/actions/comp-05
+      with:
+        trail: ${{ steps.here.outputs.trail }}

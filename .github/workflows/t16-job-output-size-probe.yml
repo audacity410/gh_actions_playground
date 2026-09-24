@@ -1,0 +1,47 @@
+name: t16-job-output-size-probe
+# Job outputs: documented 1 MB per job, 50 MB total per run.
+# 'under' job: ~900 KB output. 'over' job: ~1.1 MB output. EXPECT: 'over' output
+# is rejected/truncated (observe which). Also demonstrates the Linux 128 KiB
+# single-env-var ceiling (MAX_ARG_STRLEN) that bites when you pipe big outputs through env:.
+on: workflow_dispatch
+permissions:
+  contents: read
+
+jobs:
+  under:
+    runs-on: ubuntu-latest
+    outputs:
+      big: ${{ steps.p.outputs.big }}
+    steps:
+      - id: p
+        run: echo "big=$(python3 -c 'print("A" * 900000)')" >> "$GITHUB_OUTPUT"
+
+  over:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    outputs:
+      big: ${{ steps.p.outputs.big }}
+    steps:
+      - id: p
+        run: echo "big=$(python3 -c 'print("B" * 1100000)')" >> "$GITHUB_OUTPUT"
+
+  consume:
+    needs: [under, over]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Measure via script body (no env var)
+        run: |
+          cat > under.txt <<'EOF'
+          ${{ needs.under.outputs.big }}
+          EOF
+          cat > over.txt <<'EOF'
+          ${{ needs.over.outputs.big }}
+          EOF
+          echo "under bytes: $(tr -d '\n ' < under.txt | wc -c)"
+          echo "over bytes:  $(tr -d '\n ' < over.txt | wc -c)"
+      - name: Pass 900 KB through env (EXPECT 'Argument list too long')
+        continue-on-error: true
+        env:
+          BIG: ${{ needs.under.outputs.big }}
+        run: echo "env length ${#BIG}"

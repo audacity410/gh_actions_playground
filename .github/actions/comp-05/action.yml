@@ -1,0 +1,27 @@
+name: comp-05
+description: Composite action nesting level 5
+inputs:
+  trail:
+    description: Breadcrumb
+    required: false
+    default: ""
+outputs:
+  trail:
+    description: Breadcrumb after this level
+    value: ${{ steps.next.outputs.trail }}
+runs:
+  using: composite
+  steps:
+    - id: here
+      shell: bash
+      env:
+        TRAIL_IN: ${{ inputs.trail }}
+      run: |
+        echo "Composite level 5"
+        echo "trail=${TRAIL_IN}>C05" >> "$GITHUB_OUTPUT"
+    - id: next
+      # Local path is resolved against $GITHUB_WORKSPACE (the checked-out repo),
+      # NOT relative to this action's directory.
+      uses: ./.github/actions/comp-06
+      with:
+        trail: ${{ steps.here.outputs.trail }}

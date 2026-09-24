@@ -1,0 +1,38 @@
+name: rw-nest-01
+# Reusable workflow nesting level 1 of the chain.
+# rw-nest-00 exists only to push the chain one level past the limit (t02).
+on:
+  workflow_call:
+    inputs:
+      trail:
+        type: string
+        default: ""
+    outputs:
+      trail:
+        description: Breadcrumb proving outputs bubble up through every level
+        value: ${{ jobs.next.outputs.trail }}
+
+jobs:
+  here:
+    runs-on: ubuntu-latest
+    outputs:
+      trail: ${{ steps.t.outputs.trail }}
+    steps:
+      - id: t
+        env:
+          TRAIL_IN: ${{ inputs.trail }}
+        run: |
+          echo "Reusable workflow level 1 (L01); top-level caller: ${{ github.workflow_ref }}"
+          # Caller's workflow-level env must NOT propagate into reusable workflows.
+          if [ -n "${CALLER_ENV:-}" ]; then
+            echo "::error::CALLER_ENV leaked into reusable workflow: $CALLER_ENV"; exit 1
+          fi
+          echo "OK: CALLER_ENV not visible in called workflow (expected)."
+          echo "trail=${TRAIL_IN}>L01" >> "$GITHUB_OUTPUT"
+
+  next:
+    needs: here
+    uses: ./.github/workflows/rw-nest-02.yml
+    with:
+      trail: ${{ needs.here.outputs.trail }}
+    secrets: inherit

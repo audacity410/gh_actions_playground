@@ -1,0 +1,13 @@
+name: t02-nesting-11-levels-fail
+# Caller + rw-nest-00 + rw-nest-01..09 = 11 levels. EXPECT: run fails at startup
+# with a "called workflow depth" error before any job starts.
+on: workflow_dispatch
+permissions:
+  contents: read
+
+jobs:
+  chain:
+    uses: ./.github/workflows/rw-nest-00.yml
+    with:
+      trail: T02
+    secrets: inherit

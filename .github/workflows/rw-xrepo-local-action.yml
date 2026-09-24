@@ -1,0 +1,17 @@
+name: rw-xrepo-local-action
+# Call this FROM A DIFFERENT REPO (see second-repo/). EXPECT: the local composite
+# reference fails, because checkout and ./ paths resolve to the CALLER's repo.
+# This is the #1 trap when mapping an ADO core-template repo to GitHub.
+on:
+  workflow_call:
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5  # pin to a full commit SHA before real use
+      - run: |
+          echo "github.repository (whose code is checked out): ${{ github.repository }}"
+          echo "github.workflow_ref (top-level caller):         ${{ github.workflow_ref }}"
+          ls -la .github/actions 2>/dev/null || echo "No .github/actions in the checked-out (caller) repo"
+      - uses: ./.github/actions/comp-10

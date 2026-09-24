@@ -1,0 +1,23 @@
+name: t20-yaml-anchors
+# YAML anchors/aliases: the closest thing to ADO in-file template reuse without
+# creating a new reusable workflow (which would count toward the 50). EXPECT: success.
+on: workflow_dispatch
+permissions:
+  contents: read
+
+jobs:
+  build-a:
+    runs-on: ubuntu-latest
+    env: &common-env
+      TOOL_VERSION: "1.2.3"
+      STAGE: build
+    steps:
+      - &show-env
+        name: Show shared env
+        run: echo "TOOL_VERSION=$TOOL_VERSION STAGE=$STAGE"
+
+  build-b:
+    runs-on: ubuntu-latest
+    env: *common-env
+    steps:
+      - *show-env

@@ -1,0 +1,23 @@
+name: t08-composite-10-levels-pass
+# Job step -> comp-01 -> ... -> comp-10 (10 composite levels). EXPECT: success,
+# unless the runner's depth counter treats this as 11 (see t10 probe for exact threshold).
+on: workflow_dispatch
+permissions:
+  contents: read
+
+jobs:
+  composite-chain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5  # pin to a full commit SHA before real use
+      - id: chain
+        uses: ./.github/actions/comp-01
+        with:
+          trail: T08
+      - env:
+          TRAIL: ${{ steps.chain.outputs.trail }}
+          EXPECTED: "T08>C01>C02>C03>C04>C05>C06>C07>C08>C09>C10"
+        run: |
+          echo "Got:      $TRAIL"
+          echo "Expected: $EXPECTED"
+          [ "$TRAIL" = "$EXPECTED" ] || { echo "::error::Composite output did not survive the chain"; exit 1; }

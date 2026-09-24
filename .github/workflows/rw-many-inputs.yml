@@ -1,0 +1,316 @@
+name: rw-many-inputs
+# Reusable workflow with 100 inputs. ADO templates often take dozens of parameters.
+on:
+  workflow_call:
+    inputs:
+      p001:
+        type: string
+        default: ""
+      p002:
+        type: string
+        default: ""
+      p003:
+        type: string
+        default: ""
+      p004:
+        type: string
+        default: ""
+      p005:
+        type: string
+        default: ""
+      p006:
+        type: string
+        default: ""
+      p007:
+        type: string
+        default: ""
+      p008:
+        type: string
+        default: ""
+      p009:
+        type: string
+        default: ""
+      p010:
+        type: string
+        default: ""
+      p011:
+        type: string
+        default: ""
+      p012:
+        type: string
+        default: ""
+      p013:
+        type: string
+        default: ""
+      p014:
+        type: string
+        default: ""
+      p015:
+        type: string
+        default: ""
+      p016:
+        type: string
+        default: ""
+      p017:
+        type: string
+        default: ""
+      p018:
+        type: string
+        default: ""
+      p019:
+        type: string
+        default: ""
+      p020:
+        type: string
+        default: ""
+      p021:
+        type: string
+        default: ""
+      p022:
+        type: string
+        default: ""
+      p023:
+        type: string
+        default: ""
+      p024:
+        type: string
+        default: ""
+      p025:
+        type: string
+        default: ""
+      p026:
+        type: string
+        default: ""
+      p027:
+        type: string
+        default: ""
+      p028:
+        type: string
+        default: ""
+      p029:
+        type: string
+        default: ""
+      p030:
+        type: string
+        default: ""
+      p031:
+        type: string
+        default: ""
+      p032:
+        type: string
+        default: ""
+      p033:
+        type: string
+        default: ""
+      p034:
+        type: string
+        default: ""
+      p035:
+        type: string
+        default: ""
+      p036:
+        type: string
+        default: ""
+      p037:
+        type: string
+        default: ""
+      p038:
+        type: string
+        default: ""
+      p039:
+        type: string
+        default: ""
+      p040:
+        type: string
+        default: ""
+      p041:
+        type: string
+        default: ""
+      p042:
+        type: string
+        default: ""
+      p043:
+        type: string
+        default: ""
+      p044:
+        type: string
+        default: ""
+      p045:
+        type: string
+        default: ""
+      p046:
+        type: string
+        default: ""
+      p047:
+        type: string
+        default: ""
+      p048:
+        type: string
+        default: ""
+      p049:
+        type: string
+        default: ""
+      p050:
+        type: string
+        default: ""
+      p051:
+        type: string
+        default: ""
+      p052:
+        type: string
+        default: ""
+      p053:
+        type: string
+        default: ""
+      p054:
+        type: string
+        default: ""
+      p055:
+        type: string
+        default: ""
+      p056:
+        type: string
+        default: ""
+      p057:
+        type: string
+        default: ""
+      p058:
+        type: string
+        default: ""
+      p059:
+        type: string
+        default: ""
+      p060:
+        type: string
+        default: ""
+      p061:
+        type: string
+        default: ""
+      p062:
+        type: string
+        default: ""
+      p063:
+        type: string
+        default: ""
+      p064:
+        type: string
+        default: ""
+      p065:
+        type: string
+        default: ""
+      p066:
+        type: string
+        default: ""
+      p067:
+        type: string
+        default: ""
+      p068:
+        type: string
+        default: ""
+      p069:
+        type: string
+        default: ""
+      p070:
+        type: string
+        default: ""
+      p071:
+        type: string
+        default: ""
+      p072:
+        type: string
+        default: ""
+      p073:
+        type: string
+        default: ""
+      p074:
+        type: string
+        default: ""
+      p075:
+        type: string
+        default: ""
+      p076:
+        type: string
+        default: ""
+      p077:
+        type: string
+        default: ""
+      p078:
+        type: string
+        default: ""
+      p079:
+        type: string
+        default: ""
+      p080:
+        type: string
+        default: ""
+      p081:
+        type: string
+        default: ""
+      p082:
+        type: string
+        default: ""
+      p083:
+        type: string
+        default: ""
+      p084:
+        type: string
+        default: ""
+      p085:
+        type: string
+        default: ""
+      p086:
+        type: string
+        default: ""
+      p087:
+        type: string
+        default: ""
+      p088:
+        type: string
+        default: ""
+      p089:
+        type: string
+        default: ""
+      p090:
+        type: string
+        default: ""
+      p091:
+        type: string
+        default: ""
+      p092:
+        type: string
+        default: ""
+      p093:
+        type: string
+        default: ""
+      p094:
+        type: string
+        default: ""
+      p095:
+        type: string
+        default: ""
+      p096:
+        type: string
+        default: ""
+      p097:
+        type: string
+        default: ""
+      p098:
+        type: string
+        default: ""
+      p099:
+        type: string
+        default: ""
+      p100:
+        type: string
+        default: ""
+
+jobs:
+  show:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          ALL_INPUTS: ${{ toJSON(inputs) }}
+        run: |
+          n=$(echo "$ALL_INPUTS" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(sum(1 for v in d.values() if v))')
+          echo "Non-empty inputs received: $n (expected 100)"
+          [ "$n" = "100" ] || { echo "::error::Not all inputs arrived"; exit 1; }

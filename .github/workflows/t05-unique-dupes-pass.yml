@@ -1,0 +1,288 @@
+name: t05-unique-dupes-pass
+# 55 jobs, all calling the SAME reusable workflow. Limit is on UNIQUE files.
+# EXPECT: success (counts as 1).
+on:
+  workflow_dispatch:
+    inputs:
+      execute:
+        description: "Actually run leaf jobs (costs minutes). Limit validation happens either way."
+        type: boolean
+        default: false
+permissions:
+  contents: read
+
+jobs:
+  dup-01:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-02:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-03:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-04:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-05:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-06:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-07:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-08:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-09:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-10:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-11:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-12:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-13:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-14:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-15:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-16:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-17:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-18:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-19:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-20:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-21:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-22:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-23:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-24:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-25:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-26:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-27:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-28:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-29:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-30:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-31:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-32:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-33:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-34:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-35:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-36:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-37:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-38:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-39:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-40:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-41:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-42:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-43:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-44:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-45:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-46:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-47:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-48:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-49:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-50:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-51:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-52:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-53:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-54:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}
+
+  dup-55:
+    uses: ./.github/workflows/rw-uniq-01.yml
+    with:
+      execute: ${{ inputs.execute }}

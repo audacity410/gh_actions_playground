@@ -1,0 +1,15 @@
+name: t18-dynamic-reusable-uses-fail
+# ADO allows `template: ${{ parameters.stageTemplate }}`. GitHub does NOT allow
+# expressions in `uses:`. EXPECT: workflow file is invalid.
+on:
+  workflow_dispatch:
+    inputs:
+      which:
+        type: string
+        default: rw-uniq-01
+permissions:
+  contents: read
+
+jobs:
+  dynamic:
+    uses: ./.github/workflows/${{ inputs.which }}.yml

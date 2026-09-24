@@ -1,0 +1,21 @@
+name: comp-10
+description: Composite action nesting level 10
+inputs:
+  trail:
+    description: Breadcrumb
+    required: false
+    default: ""
+outputs:
+  trail:
+    description: Breadcrumb after this level
+    value: ${{ steps.here.outputs.trail }}
+runs:
+  using: composite
+  steps:
+    - id: here
+      shell: bash
+      env:
+        TRAIL_IN: ${{ inputs.trail }}
+      run: |
+        echo "Composite level 10"
+        echo "trail=${TRAIL_IN}>C10" >> "$GITHUB_OUTPUT"

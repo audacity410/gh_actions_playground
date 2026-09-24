@@ -1,0 +1,17 @@
+name: t19-dynamic-composite-uses-fail
+# Same as t18 but for a step-level composite. EXPECT: workflow file is invalid.
+on:
+  workflow_dispatch:
+    inputs:
+      which:
+        type: string
+        default: comp-10
+permissions:
+  contents: read
+
+jobs:
+  dynamic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5  # pin to a full commit SHA before real use
+      - uses: ./.github/actions/${{ inputs.which }}

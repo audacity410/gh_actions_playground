@@ -1,0 +1,33 @@
+name: rw-nest-08
+# Reusable workflow nesting level 8 of the chain.
+# rw-nest-00 exists only to push the chain one level past the limit (t02).
+on:
+  workflow_call:
+    inputs:
+      trail:
+        type: string
+        default: ""
+    outputs:
+      trail:
+        description: Breadcrumb proving outputs bubble up through every level
+        value: ${{ jobs.next.outputs.trail }}
+
+jobs:
+  here:
+    runs-on: ubuntu-latest
+    outputs:
+      trail: ${{ steps.t.outputs.trail }}
+    steps:
+      - id: t
+        env:
+          TRAIL_IN: ${{ inputs.trail }}
+        run: |
+          echo "Reusable workflow level 8 (L08); top-level caller: ${{ github.workflow_ref }}"
+          echo "trail=${TRAIL_IN}>L08" >> "$GITHUB_OUTPUT"
+
+  next:
+    needs: here
+    uses: ./.github/workflows/rw-nest-09.yml
+    with:
+      trail: ${{ needs.here.outputs.trail }}
+    secrets: inherit

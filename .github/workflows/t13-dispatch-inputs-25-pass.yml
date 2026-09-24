@@ -1,0 +1,92 @@
+name: t13-dispatch-inputs-25-pass
+# 25 workflow_dispatch inputs (documented max). EXPECT: Run button shows all 25.
+on:
+  workflow_dispatch:
+    inputs:
+      p01:
+        type: string
+        default: v01
+      p02:
+        type: string
+        default: v02
+      p03:
+        type: string
+        default: v03
+      p04:
+        type: string
+        default: v04
+      p05:
+        type: string
+        default: v05
+      p06:
+        type: string
+        default: v06
+      p07:
+        type: string
+        default: v07
+      p08:
+        type: string
+        default: v08
+      p09:
+        type: string
+        default: v09
+      p10:
+        type: string
+        default: v10
+      p11:
+        type: string
+        default: v11
+      p12:
+        type: string
+        default: v12
+      p13:
+        type: string
+        default: v13
+      p14:
+        type: string
+        default: v14
+      p15:
+        type: string
+        default: v15
+      p16:
+        type: string
+        default: v16
+      p17:
+        type: string
+        default: v17
+      p18:
+        type: string
+        default: v18
+      p19:
+        type: string
+        default: v19
+      p20:
+        type: string
+        default: v20
+      p21:
+        type: string
+        default: v21
+      p22:
+        type: string
+        default: v22
+      p23:
+        type: string
+        default: v23
+      p24:
+        type: string
+        default: v24
+      p25:
+        type: string
+        default: v25
+permissions:
+  contents: read
+
+jobs:
+  show:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          ALL_INPUTS: ${{ toJSON(inputs) }}
+        run: |
+          echo "$ALL_INPUTS"
+          echo "count=$(echo "$ALL_INPUTS" | python3 -c 'import json,sys; print(len(json.load(sys.stdin)))')"
